@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="margin-right:20px">
   <!-- <el-button type="primary" icon="el-icon-edit">添加角色</el-button> -->
   <el-button type="primary" @click="dialogFormVisible = true" icon="el-icon-edit" size="mini">添加角色</el-button>
 
@@ -13,7 +13,7 @@
   </el-form-item>
   <el-form-item>
     <el-button type="primary" @click="submitForm('ruleForm2')">提交</el-button>
-    <el-button @click="resetForm('ruleForm2')">重置{{roles.length}}</el-button>
+    <el-button @click="resetForm('ruleForm2')">重置</el-button>
   </el-form-item>
 </el-form>
 </el-dialog>
@@ -93,6 +93,7 @@
         this.ruleForm2.pass2 = '';
        },
       submitForm(formName) {
+       var  _this = this;
         this.$refs[formName].validate((valid) => {
           if (valid) {
             this.postRequest("/upms/role/add"

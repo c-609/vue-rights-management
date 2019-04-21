@@ -1,8 +1,9 @@
 <template>
   <div>
-    <div class="searchWord">
+    <div style="float:left; margin-bottom:10px">
       <div style="display: inline-block"> 搜索：</div>
-      <el-input v-model="search" style="display: inline-block;width: 1300px" 
+      <el-input v-model="search" style="display: inline-block;width: 250px" 
+        size="mini"
         placeholder="请输入搜索内容">
       </el-input>
     </div>
@@ -34,13 +35,28 @@
             </div>
             </div> 
           <div v-else>{{scope.row[item.prop]}}</div> 
-
+          
+          <el-button @click="handleView(scope.row.id)" type="text" size="small" v-if="item.prop=='operate'">查看</el-button>
           <el-button @click="handleEdit( scope.row)" type="text" size="small" v-if="item.prop=='operate'">编辑</el-button>
           <el-button @click="handleDelete(scope.row.id)" type="text" size="small" v-if="item.prop==='operate'">删除</el-button>
        </template>
         
       </el-table-column>  
     </el-table>
+    <el-dialog
+      title="查看"
+      :visible.sync="dialogTransferVisible"
+      @close='closeDialog'  
+      >
+      <el-tree
+        :data="menuData"
+        ref="menuData"
+        node-key="id"
+        :default-expand-all="true"
+        :default-checked-keys="defaultChecked"
+        :props="menuProps">
+      </el-tree>
+    </el-dialog>
     <el-dialog
       title="编辑"
       :visible.sync="dialogFormVisible"
@@ -98,10 +114,16 @@
           admin:'',
           superuser:'',
           user:'',
-        }
+        },
+        menuProps:{
+          label: 'name',
+          children: 'children',
+        },
+        menuData:[],
+        dialogTransferVisible: false,
       }
     },
-    props: ['tableData', 'header', 'operater'],
+    props: ['tableData', 'header', 'operater',],
     computed: {
    
       
@@ -158,6 +180,12 @@
             });
           });
           
+      },
+      handleView(id){
+        this.dialogTransferVisible=true;
+        this.postRequest("/upms/user/menuTree",{uid:id}).then(res=>{     
+           this.menuData  = res.data.data ;
+        }) 
       },
        handleEdit(row) {
           this.dialogFormVisible=true;

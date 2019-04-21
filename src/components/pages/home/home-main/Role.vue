@@ -1,6 +1,6 @@
 <template>
   <div>
-    <basic-role-search :addButtonType="addButtonType" :roles="roles"></basic-role-search>
+    <basic-role-add style="float:left"  :roles="roles"></basic-role-add>
     <role-table
       :tableData="roles"
       :header="header"
@@ -13,14 +13,14 @@
 <script>
 
 import RoleTable from './RoleTable'
-import BasicRoleSearch from './../../../common/BasicRoleSearch'
+import BasicRoleAdd from './../../../common/BasicRoleAdd'
 
 
 export default {
   name: 'Role',
   components: {
     RoleTable,
-    BasicRoleSearch,
+    BasicRoleAdd,
   
   },
   data() {

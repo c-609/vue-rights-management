@@ -1,6 +1,6 @@
 <template>
   <div>
-    <basic-search-bar :roles="roles" :users="users"></basic-search-bar>
+    <basic-user-add style="float:left" :roles="roles" :users="users"></basic-user-add>
     <basic-table 
       :tableData="users"
       :header="header"
@@ -12,13 +12,13 @@
 
 <script>
 import BasicTable from './../../../common/BasicTable'
-import BasicSearchBar from './../../../common/BasicSearchBar'
+import BasicUserAdd from './../../../common/BasicUserAdd'
 
 export default {
   name: 'User',
   components: {
     BasicTable,
-    BasicSearchBar,
+    BasicUserAdd,
     
   },
   

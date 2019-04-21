@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="margin-right:20px">
   <!-- <el-button type="primary" icon="el-icon-edit">添加角色</el-button> -->
   <el-button type="primary" @click="dialogFormVisible = true" icon="el-icon-edit" size="mini">添加用户</el-button>
 
@@ -14,7 +14,7 @@
   <el-form-item label="确认密码" prop="checkPass">
     <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
   </el-form-item>
-  <el-form-item label="角色标识">
+  <el-form-item label="角色标识" prop="roles">
     <el-checkbox v-for="(item,index) in roles" :key="index" v-model="item.name">{{item.nameZh}}</el-checkbox>
     <!-- <el-checkbox v-model="ruleForm2.admin">ROLE_admin</el-checkbox>
     <el-checkbox v-model="ruleForm2.superuser">ROLE_superuser</el-checkbox>

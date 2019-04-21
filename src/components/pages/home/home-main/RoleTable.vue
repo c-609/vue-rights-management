@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="searchWord">
+    <div style="float:left; margin-bottom:10px">
       <div style="display: inline-block"> 搜索：</div>
-      <el-input v-model="search" style="display: inline-block;width: 1300px" 
+      <el-input v-model="search" size="mini" style="display: inline-block;width: 250px" 
         placeholder="请输入搜索内容">
       </el-input>
     </div>
@@ -76,10 +76,10 @@
   export default {
     name: 'BasicTable',
     props: ['tableData', 'header', 'operater'],
-    
+     inject:['reload'],
      data() {
       return { 
-         search: '',   
+        search: '',   
         pagesize: 8,
 				currpage: 1,
         dialogTransferVisible: false,
@@ -150,8 +150,9 @@
                    message:'删除成功' 
                 })
               }
-               this.reload();
+              //  this.reload();
             })
+            this.reload();
           }).catch(() => {
             _this.$message({
               type: 'info',
@@ -196,7 +197,7 @@
     },
 
     created:function(){
-      this.getRequest("/config/allmenu").then(res=>{
+      this.getRequest("/config/allmenuTree").then(res=>{
           this.menuData = res.data.data;
         })
     }
