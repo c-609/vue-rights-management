@@ -69,7 +69,6 @@ export default {
     this.editButton();
     this.getRequest("/upms/menu/").then((data)=>{
       this.form=data.data.data;
-      console.log(this.form)
     });
     eventBus.$on("getNodeData",(form)=>{
         this.form = form;
@@ -104,12 +103,13 @@ export default {
         })
     },
     editUpdate(){
-      alert("1");
       this.postRequest("/upms/menu/update",
-        {id:this.form.id}).then(res=>{
-          this.reload();
-            console.log(res)
-            alert("2");
+        {"id":this.form.id,
+          "name":this.form.name,
+          "component":this.form.component,
+          "path":this.form.path
+        }).then(res=>{
+            this.reload();
         })
     },
     cancelButton(){

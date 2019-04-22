@@ -41,7 +41,7 @@ export default {
         for(var i=0;i<this.allMenu.length;i++){
           if(this.allMenu[i].id==id){
             this.form = this.allMenu[i];
-            console.log(this.allMenu[i])
+            //console.log(this.allMenu[i])
             break;
           }
         }
