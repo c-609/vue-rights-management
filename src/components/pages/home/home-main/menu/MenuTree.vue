@@ -4,7 +4,8 @@
       node-key="id"
       :data="menuData" 
       :props="menuProps" 
-      @node-click="getNodeData">
+      @node-click="getNodeData"
+      >
     </el-tree>
   </div>
 </template>
@@ -45,6 +46,7 @@ export default {
           }
         }
         eventBus.$emit("getNodeData",this.form)
+        eventBus.$emit("getDeleteId",this.form.id);
       },
     },
     created:function(){

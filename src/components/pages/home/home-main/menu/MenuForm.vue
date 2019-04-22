@@ -10,6 +10,9 @@
       <el-form-item label=标题 prop="name">
         <el-input v-model="form.name"  placeholder="请输入标题" :disabled="formEdit"></el-input>
       </el-form-item>
+      <el-form-item label="请求地址" prop="url" v-if="formStatus=='add'">
+        <el-input v-model="form.url"  placeholder="请求地址" :disabled="formEdit"></el-input>
+      </el-form-item>
       <!-- <el-form-item label="类型">
         <el-select v-model="form.type" placeholder="请选择资源请求类型" :disabled="formEdit">
         <el-option>
@@ -17,19 +20,19 @@
       </el-select>
       </el-form-item> -->
 
-      <el-form-item label="前端组件" prop="component">
+      <el-form-item label="前端组件" prop="component" v-if="formStatus!='add'">
         <el-input v-model="form.component" placeholder="请输入描述" :disabled="formEdit"></el-input>
       </el-form-item>
-      <el-form-item label="前端地址" prop="path">
+      <el-form-item label="前端地址" prop="path" v-if="formStatus!='add'">
         <el-input v-model="form.path"  placeholder="嵌套地址" :disabled="formEdit"></el-input>
       </el-form-item>
 
       <el-form-item style="float:left" v-if="formStatus=='add'">
-        <el-button type="primary" size="small">保存</el-button>
+        <el-button type="primary" size="small" @click="addSave">保存</el-button>
         <el-button size="small" @click="cancelButton">取消</el-button>
       </el-form-item>
       <el-form-item style="float:left" v-if="formStatus=='edit'">
-        <el-button type="primary" size="small">更新</el-button>
+        <el-button type="primary" size="small" @click="editUpdate">更新</el-button>
         <el-button size="small" @click="cancelButton">取消</el-button>
       </el-form-item>
 
@@ -41,10 +44,12 @@
 import eventBus from "./../../../../common/eventBus.js"
 export default {
   name: 'MenuForm',
+  inject:['reload'],
   data(){
     return {
       formStatus:'',
       formEdit:true,
+      formAdd:true,
       form: {
           permission: undefined,
           name: undefined,
@@ -54,11 +59,13 @@ export default {
           sort: undefined,
           component: undefined,
           type: undefined,
-          path: undefined
+          path: undefined,
+          url:undefined
         },
     }
   },
   created:function(){
+    this.addButton();
     this.editButton();
     this.getRequest("/upms/menu/").then((data)=>{
       this.form=data.data.data;
@@ -66,24 +73,60 @@ export default {
     });
     eventBus.$on("getNodeData",(form)=>{
         this.form = form;
-        console.log(this.form)
+        this.formStatus='';
+        this.formEdit=true;
+        this.formAdd=true;
       })
   },
   methods:{
-    editButton(){
+    addButton(){
       eventBus.$on("add",(formAdd,formStatus)=>{
         this.formStatus = formStatus;
         this.formEdit = formAdd;
+        this.resetForm();
       })
+    },
+    editButton(){
       eventBus.$on("edit",(formEdit,formStatus)=>{
         this.formEdit = formEdit;
         this.formStatus = formStatus
       })
     },
+    addSave(){
+      this.postRequest("/upms/menu/add",
+      {
+        "parentId":this.form.parentId,
+        "url":this.form.url,
+        "name":this.form.name,
+        "path":'fdd'
+        }).then(res=>{
+          this.reload();
+        })
+    },
+    editUpdate(){
+      alert("1");
+      this.postRequest("/upms/menu/update",
+        {id:this.form.id}).then(res=>{
+          this.reload();
+            console.log(res)
+            alert("2");
+        })
+    },
     cancelButton(){
      this.formEdit = true;
      this.formStatus = '';
-    }
+    },
+     resetForm() {
+       this.form.permission='';
+       this.form.id='';
+       this.form.name='';
+       this.form.icon='';
+       this.form.sort='';
+       this.form.component='';
+       this.form.type='';
+       this.form.path='';
+       this.form.url='';
+      }
   }
 }
 </script>
