@@ -52,7 +52,7 @@ export default {
   created:function(){
     eventBus.$on("getDeleteId",(id)=>{
           this.id=id;
-          // alert("jianting")
+         
         })
   }
 }

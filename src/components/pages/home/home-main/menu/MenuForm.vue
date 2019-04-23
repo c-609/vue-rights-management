@@ -4,7 +4,7 @@
       <el-form-item label="父级节点" prop="parentId">
         <el-input v-model="form.parentId" :disabled="true"></el-input>
       </el-form-item>
-      <el-form-item label="节点ID" prop="id">
+      <el-form-item label="节点ID" prop="id" v-if="formStatus!='add'">
         <el-input v-model="form.id" placeholder="请输入节点ID" :disabled="formEdit"></el-input>
       </el-form-item>
       <el-form-item label=标题 prop="name">
@@ -50,6 +50,7 @@ export default {
       formStatus:'',
       formEdit:true,
       formAdd:true,
+      addParentId:'',
       form: {
           permission: undefined,
           name: undefined,
@@ -65,12 +66,14 @@ export default {
     }
   },
   created:function(){
+    this.addMenu();
     this.addButton();
     this.editButton();
     this.getRequest("/upms/menu/").then((data)=>{
       this.form=data.data.data;
     });
     eventBus.$on("getNodeData",(form)=>{
+        this.addParentId = form.id;
         this.form = form;
         this.formStatus='';
         this.formEdit=true;
@@ -78,8 +81,17 @@ export default {
       })
   },
   methods:{
+    addMenu(){
+      eventBus.$on("addMenuNode",(formAdd,formStatus,node)=>{
+        this.formStatus = formStatus;
+        this.formEdit = formAdd;
+        this.addParentId = node;    
+        this.resetForm();
+      })
+    },
     addButton(){
       eventBus.$on("add",(formAdd,formStatus)=>{
+        // alert("5")
         this.formStatus = formStatus;
         this.formEdit = formAdd;
         this.resetForm();
@@ -116,16 +128,18 @@ export default {
      this.formEdit = true;
      this.formStatus = '';
     },
-     resetForm() {
-       this.form.permission='';
-       this.form.id='';
-       this.form.name='';
-       this.form.icon='';
-       this.form.sort='';
-       this.form.component='';
-       this.form.type='';
-       this.form.path='';
-       this.form.url='';
+     resetForm() { 
+      this.form = {
+          permission: undefined,
+          name: undefined,
+          id : undefined,
+          parentId: this.addParentId,
+          icon: undefined,
+          sort: undefined,
+          component: undefined,
+          type: undefined,
+          path: undefined
+        }
       }
   }
 }

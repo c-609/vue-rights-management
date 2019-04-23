@@ -1,4 +1,5 @@
 <template>
+<div>
   <div>
     <el-tree 
       node-key="id"
@@ -8,6 +9,7 @@
       >
     </el-tree>
   </div>
+</div>
 </template>
 
 <script>
@@ -39,6 +41,9 @@ export default {
      getNodeData(data) {
         var id = data.id;
         for(var i=0;i<this.allMenu.length;i++){
+          this.getRequest("/upms/menu/list").then(response => {
+          this.allMenu = response.data.data;      
+        })
           if(this.allMenu[i].id==id){
             this.form = this.allMenu[i];
             //console.log(this.allMenu[i])
@@ -48,7 +53,9 @@ export default {
         eventBus.$emit("getNodeData",this.form)
         eventBus.$emit("getDeleteId",this.form.id);
       },
+     
     },
+   
     created:function(){
       this.getRequest("/upms/menu/tree").then(res=>{
           this.menuData = res.data.data;
