@@ -50,11 +50,12 @@ export default {
       },
     },
     created:function(){
-      this.getRequest("/upms/menu/").then(res=>{
+      this.getRequest("/upms/menu/tree").then(res=>{
           this.menuData = res.data.data;
         })
-      this.getRequest("/upms/menu/all").then(response => {
+      this.getRequest("/upms/menu/list").then(response => {
           this.allMenu = response.data.data;      
+          console.log(this.allMenu)
         })
     }
 }

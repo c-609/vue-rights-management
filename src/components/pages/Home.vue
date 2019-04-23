@@ -69,7 +69,7 @@ export default {
   mounted:function(){
       this.getRequest("/config/sysmenu").then((data)=>{
         this.menus=data.data.data;
-        console.log(data);
+        console.log(this.menus);
       });
     }
 };
