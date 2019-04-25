@@ -100,7 +100,7 @@
             ,{role:this.ruleForm2.pass,
               roleZh:this.ruleForm2.pass2
             }).then((res)=>{
-              console.log(res.data.data);
+              // console.log(res.data.data);
           if(res.data.data===1){
                _this.$message({
                type:'info',

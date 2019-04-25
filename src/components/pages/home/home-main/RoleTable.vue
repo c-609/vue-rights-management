@@ -174,8 +174,8 @@
         
         this.postRequest("/config/menuIdByRid",{rid:this.rid}).then(res=>{     
           this.defaultChecked = res.data.data ;
-         
-         alert(res.data.data);
+         console.log(res)
+        //  alert(res.data.data);
         }) 
         
       },

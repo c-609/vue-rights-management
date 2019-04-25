@@ -1,6 +1,6 @@
 <template>
   <div>
-    <basic-role-add style="float:left"  :roles="roles"></basic-role-add>
+    <basic-role-add style="float:left"  :roles="roles "></basic-role-add>
     <role-table
       :tableData="roles"
       :header="header"
