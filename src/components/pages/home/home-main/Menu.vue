@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-row >
-      <menu-button style="float:left"></menu-button>  
+      <node-add-button></node-add-button>
+      <menu-button style="float:left; margin-left:20px"></menu-button>  
     </el-row>
     <el-row >
-      <el-col :span="4">
+      <el-col :span="5">
         <menu-tree></menu-tree>
-        <node-add-button></node-add-button>
       </el-col>
-      <el-col :span="20">
+      <el-col :span="19">
         <menu-form></menu-form>
       </el-col>
     </el-row>

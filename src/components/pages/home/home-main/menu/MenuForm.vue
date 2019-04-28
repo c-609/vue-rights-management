@@ -68,7 +68,7 @@ export default {
   created:function(){
     this.addMenu();
     this.addButton();
-    this.editButton();
+    this.nodeEdit();
     this.getRequest("/upms/menu/").then((data)=>{
       this.form=data.data.data;
     });
@@ -97,10 +97,10 @@ export default {
         this.resetForm();
       })
     },
-    editButton(){
-      eventBus.$on("edit",(formEdit,formStatus)=>{
-        this.formEdit = formEdit;
-        this.formStatus = formStatus
+    nodeEdit(){
+      eventBus.$on('nodeEdit',()=>{
+        this.formEdit = false;
+        this.formStatus = 'edit'
       })
     },
     addSave(){
